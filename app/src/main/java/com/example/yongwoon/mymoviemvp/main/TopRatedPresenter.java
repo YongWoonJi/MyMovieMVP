@@ -42,6 +42,11 @@ public class TopRatedPresenter implements TopRatedContract.Presenter {
                 view.hideProgressBar();
                 view.showTopRatedMovies(results.getResults());
             }
+
+            @Override
+            public void onFailed(Exception e) {
+                view.showSnackBar(e);
+            }
         });
     }
 }

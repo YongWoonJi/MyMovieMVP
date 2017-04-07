@@ -41,6 +41,11 @@ public class PopularPresenter implements PopularContract.Presenter {
                 view.hideProgress();
                 view.showPopularMovies(results.getResults());
             }
+
+            @Override
+            public void onFailed(Exception e) {
+                view.showSnackBar(e);
+            }
         });
     }
 

@@ -32,6 +32,7 @@ public class PopularRepository implements IPopularRepository {
                     @Override
                     public void onCompleted(Exception e, PopularResponse result) {
                         if (e != null) {
+                            callback.onFailed(e);
                             return;
                         }
 

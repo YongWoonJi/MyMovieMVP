@@ -12,6 +12,7 @@ public interface IPopularRepository {
 
         void onLoaded(PopularResponse results);
 
+        void onFailed(Exception e);
     }
 
 

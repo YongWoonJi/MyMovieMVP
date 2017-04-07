@@ -12,6 +12,7 @@ public interface ITopRatedRepository {
 
         void onLoaded(TopRatedResponse results);
 
+        void onFailed(Exception e);
     }
 
     void getTopRatedResponse(GetTopRatedResponseCallback callback);

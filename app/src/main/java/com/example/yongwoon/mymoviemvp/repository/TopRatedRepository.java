@@ -32,6 +32,7 @@ public class TopRatedRepository implements ITopRatedRepository {
                     @Override
                     public void onCompleted(Exception e, TopRatedResponse result) {
                         if (e != null) {
+                            callback.onFailed(e);
                             return;
                         }
 
