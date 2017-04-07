@@ -3,10 +3,8 @@ package com.example.yongwoon.mymoviemvp.main;
 import android.content.Context;
 
 import com.example.yongwoon.mymoviemvp.model.TopRatedResponse;
-import com.example.yongwoon.mymoviemvp.util.Constants;
-import com.google.gson.reflect.TypeToken;
-import com.koushikdutta.async.future.FutureCallback;
-import com.koushikdutta.ion.Ion;
+import com.example.yongwoon.mymoviemvp.repository.ITopRatedRepository;
+import com.example.yongwoon.mymoviemvp.repository.TopRatedRepository_;
 
 import org.androidannotations.annotations.EBean;
 import org.androidannotations.annotations.RootContext;
@@ -21,32 +19,28 @@ public class TopRatedPresenter implements TopRatedContract.Presenter {
     @RootContext
     Context context;
 
-    TopRatedContract.View view;
+    private TopRatedContract.View view;
+
+    ITopRatedRepository repository;
+
+
 
     @Override
     public void setView(TopRatedContract.View view) {
         this.view = view;
+        this.repository = TopRatedRepository_.getInstance_(context);
     }
 
     @Override
     public void loadTopRatedMovies() {
         view.showProgress();
 
-        Ion.with(context)
-                .load(Constants.BASE_URL + "movie/top_rated")
-                .addQuery("api_key", Constants.API_KEY)
-                .as(new TypeToken<TopRatedResponse>(){})
-                .setCallback(new FutureCallback<TopRatedResponse>() {
-                    @Override
-                    public void onCompleted(Exception e, TopRatedResponse result) {
-                        if (e != null) {
-                            view.showSnackBar(e);
-                            return;
-                        }
-
-                        view.hideProgressBar();
-                        view.showTopRatedMovies(result.getResults());
-                    }
-                });
+        repository.getTopRatedResponse(new ITopRatedRepository.GetTopRatedResponseCallback() {
+            @Override
+            public void onLoaded(TopRatedResponse results) {
+                view.hideProgressBar();
+                view.showTopRatedMovies(results.getResults());
+            }
+        });
     }
 }

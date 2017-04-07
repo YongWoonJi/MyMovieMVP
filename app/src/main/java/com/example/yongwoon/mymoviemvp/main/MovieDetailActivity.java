@@ -8,7 +8,6 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.example.yongwoon.mymoviemvp.R;
-import com.example.yongwoon.mymoviemvp.model.EventData;
 import com.example.yongwoon.mymoviemvp.model.PopularResults;
 import com.example.yongwoon.mymoviemvp.model.TopRatedResults;
 import com.example.yongwoon.mymoviemvp.util.Constants;
@@ -17,6 +16,8 @@ import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.Extra;
 import org.androidannotations.annotations.ViewById;
+
+import java.io.Serializable;
 
 @EActivity(R.layout.activity_movie_detail)
 public class MovieDetailActivity extends AppCompatActivity {
@@ -28,7 +29,7 @@ public class MovieDetailActivity extends AppCompatActivity {
     TextView detailTitle, releaseDate, detailOverview;
 
     @Extra
-    EventData data;
+    Serializable data;
 
 
     @AfterViews

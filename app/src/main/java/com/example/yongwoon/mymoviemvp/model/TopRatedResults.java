@@ -2,11 +2,13 @@ package com.example.yongwoon.mymoviemvp.model;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+
 /**
  * Created by YongWoon on 2017-04-06 006.
  */
 
-public class TopRatedResults implements EventData {
+public class TopRatedResults implements Serializable {
     @SerializedName("poster_path")
     private String poster_path;
 

@@ -26,4 +26,6 @@ public interface PopularContract {
 
         void loadPopularMovies();
     }
+
+
 }

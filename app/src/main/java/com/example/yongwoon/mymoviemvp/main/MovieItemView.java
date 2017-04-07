@@ -8,13 +8,14 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.yongwoon.mymoviemvp.R;
-import com.example.yongwoon.mymoviemvp.model.EventData;
 import com.example.yongwoon.mymoviemvp.model.PopularResults;
 import com.example.yongwoon.mymoviemvp.model.TopRatedResults;
 import com.example.yongwoon.mymoviemvp.util.Constants;
 
 import org.androidannotations.annotations.EViewGroup;
 import org.androidannotations.annotations.ViewById;
+
+import java.io.Serializable;
 
 /**
  * Created by YongWoon on 2017-04-06 006.
@@ -25,7 +26,7 @@ public class MovieItemView extends FrameLayout implements View.OnClickListener {
 
     Context context;
 
-    EventData item;
+    Serializable item;
 
     @ViewById
     ImageView moviePoster;
@@ -38,7 +39,7 @@ public class MovieItemView extends FrameLayout implements View.OnClickListener {
         this.context = context;
     }
 
-    public void bind(EventData data) {
+    public void bind(Serializable data) {
         item = data;
 
         if (data instanceof PopularResults) {
@@ -49,6 +50,7 @@ public class MovieItemView extends FrameLayout implements View.OnClickListener {
             Glide.with(context).load(Constants.IMAGE_BASE_URL + Constants.IMAGE_W185 + result.getPoster_path())
                     .placeholder(R.drawable.movieicon)
                     .into(moviePoster);
+
         } else if (data instanceof TopRatedResults) {
             TopRatedResults result = (TopRatedResults) data;
             movieTitle.setText(result.getTitle());

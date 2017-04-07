@@ -3,10 +3,8 @@ package com.example.yongwoon.mymoviemvp.main;
 import android.content.Context;
 
 import com.example.yongwoon.mymoviemvp.model.PopularResponse;
-import com.example.yongwoon.mymoviemvp.util.Constants;
-import com.google.gson.reflect.TypeToken;
-import com.koushikdutta.async.future.FutureCallback;
-import com.koushikdutta.ion.Ion;
+import com.example.yongwoon.mymoviemvp.repository.IPopularRepository;
+import com.example.yongwoon.mymoviemvp.repository.PopularRepository_;
 
 import org.androidannotations.annotations.EBean;
 import org.androidannotations.annotations.RootContext;
@@ -23,32 +21,27 @@ public class PopularPresenter implements PopularContract.Presenter {
 
     private PopularContract.View view;
 
+    private IPopularRepository repository;
+
+
 
     @Override
     public void setView(PopularContract.View view) {
         this.view = view;
+        repository = PopularRepository_.getInstance_(context);
     }
 
     @Override
     public void loadPopularMovies() {
         view.showProgress();
 
-        Ion.with(context)
-                .load(Constants.BASE_URL + "movie/popular")
-                .addQuery("api_key", Constants.API_KEY)
-                .as(new TypeToken<PopularResponse>(){})
-                .setCallback(new FutureCallback<PopularResponse>() {
-                    @Override
-                    public void onCompleted(Exception e, PopularResponse result) {
-                        if (e != null) {
-                            view.showSnackBar(e);
-                            return;
-                        }
-
-                        view.hideProgress();
-                        view.showPopularMovies(result.getResults());
-                    }
-                });
+        repository.getPopularResponse(new IPopularRepository.GetPopularResponseCallback() {
+            @Override
+            public void onLoaded(PopularResponse results) {
+                view.hideProgress();
+                view.showPopularMovies(results.getResults());
+            }
+        });
     }
 
 
