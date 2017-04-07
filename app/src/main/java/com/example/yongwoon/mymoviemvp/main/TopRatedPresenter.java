@@ -4,8 +4,9 @@ import android.content.Context;
 
 import com.example.yongwoon.mymoviemvp.model.TopRatedResponse;
 import com.example.yongwoon.mymoviemvp.repository.ITopRatedRepository;
-import com.example.yongwoon.mymoviemvp.repository.TopRatedRepository_;
+import com.example.yongwoon.mymoviemvp.repository.TopRatedRepository;
 
+import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EBean;
 import org.androidannotations.annotations.RootContext;
 
@@ -19,16 +20,16 @@ public class TopRatedPresenter implements TopRatedContract.Presenter {
     @RootContext
     Context context;
 
-    private TopRatedContract.View view;
-
+    @Bean(TopRatedRepository.class)
     ITopRatedRepository repository;
+
+    private TopRatedContract.View view;
 
 
 
     @Override
     public void setView(TopRatedContract.View view) {
         this.view = view;
-        this.repository = TopRatedRepository_.getInstance_(context);
     }
 
     @Override

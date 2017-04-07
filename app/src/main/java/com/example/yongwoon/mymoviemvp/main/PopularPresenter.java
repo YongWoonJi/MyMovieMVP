@@ -4,8 +4,9 @@ import android.content.Context;
 
 import com.example.yongwoon.mymoviemvp.model.PopularResponse;
 import com.example.yongwoon.mymoviemvp.repository.IPopularRepository;
-import com.example.yongwoon.mymoviemvp.repository.PopularRepository_;
+import com.example.yongwoon.mymoviemvp.repository.PopularRepository;
 
+import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EBean;
 import org.androidannotations.annotations.RootContext;
 
@@ -19,16 +20,15 @@ public class PopularPresenter implements PopularContract.Presenter {
     @RootContext
     Context context;
 
+    @Bean(PopularRepository.class)
+    IPopularRepository repository;
+
     private PopularContract.View view;
-
-    private IPopularRepository repository;
-
 
 
     @Override
     public void setView(PopularContract.View view) {
         this.view = view;
-        repository = PopularRepository_.getInstance_(context);
     }
 
     @Override
